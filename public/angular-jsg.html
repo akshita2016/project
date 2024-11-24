@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            crossorigin="anonymous">
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+
+
+
+        <script>
+
+
+
+    var module = angular.module("MyModule",[]);
+    var controller= module.controller("MyController",function ($scope,$http)
+{
+    $scope.selcity="none";
+        $scope.doShowSelcity=function()
+        {
+          alert($scope.selcity);
+        }
+
+        
+    $scope.selsport="none";
+        $scope.doShowSelsport=function()
+        {
+          alert($scope.selsport);
+        }
+
+
+
+    $scope.dosearchshow=function()
+            {
+               
+                let url="/tournament?city="+$scope.selcity+"&game="+ $scope.selsport;
+                $http.get(url).then(done,fail);
+                function done(response)
+                {
+                    $scope.jsonArray=response.data;
+                }
+                function fail(err)
+                {
+                    alert(err.data);
+                }
+            }
+
+   $scope.fetchTournaments = function(){
+    alert();
+    let url="/fetch-tour";
+    $http.get(url).then(done,fail);
+    function done(response)
+    {
+        alert(JSON.stringify(response.data));
+          $scope.jsonArray=response.data;
+
+    }
+    function fail(err)
+    {
+        alert(err.data);
+    }
+   }
+
+   $scope.fetchInfo = function(){
+    alert();
+    let url="/modal.html";
+    $http.get(url).then(done,fail);
+    function done(response)
+    {
+        alert(JSON.stringify(response.data));
+          $scope.jsonArray=response.data;
+
+    }
+    function fail(err)
+    {
+        alert(err.data);
+    }
+   }
+
+$scope.doFetchOne= function(index){
+    alert(Json.stringify(jsonArray[index]))
+}
+})
+</script>
+    </head>
+    <body ng-app="MyModule" ng-controller="MyController"  ng-init="fillCities() fillGames();">
+        <center>  <h1>RECORDS</h1></center>
+
+        <br><br><br><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Cities : 
+        <select ng-change="doShowSelcity();" ng-model="selcity">
+          <option value="none">Select</option>
+            <option ng-repeat="obj in jsonArray" value="{{obj.city}}">{{obj.city}}</option>
+        </select>
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       
+        Sports : 
+        <select ng-change="doShowSelsport();" ng-model="selsport">
+          <option value="none">Select</option>
+            <option ng-repeat="obj in jsonArray" value="{{obj.Game}}">{{obj.Game}}</option>
+        </select>
+       
+<br><br><br>
+      <center> <input type="button" class="btn btn-dark" ng-click="fetchTournaments();" value="Show All Records"> </center> 
+<br><br><br>
+        <div class="container">
+            
+            <div class="row">
+                <div class="col-md-3" ng-repeat="obj in jsonArray">
+                    <div class="card">
+                        <center> <img src="{{obj.prev}}" width="100" height="100"  alt="..."></center>
+                        <div class="card-body">
+                            <p class="card-title">{{obj.Title}}</p>
+                            <p>{{obj.Game}}</h5>
+                            <p class="card-title">{{obj.location}}</p> 
+                            <p class="card-title">{{obj.Entry}}</p>
+                            <p class="card-title">{{obj.date | date:'yyyy-MM-dd'}}</p>
+
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Details
+                              </button>
+                       
+        <!-- Modal -->
+
+        <div class="modal fade" id="exampleModal{{obj.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" ng-click="doFetchOne($index)"   >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                    <center>  <h1 class="modal-title fs-5" id="exampleModalLabel">INFORMATION</h1></center>
+                    
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  
+                    <div>
+                     <p>{{$scope.selobj}}</p>
+                        
+                    
+                        <!-- Vertically centered scrollable modal -->
+                        <div class="container">
+                        
+                    
+                        
+                      
+                            <center> <img src="{{obj.prev}}" width="100" height="100"  alt="..."></center>
+                            <center>
+                                <p>TITLE:{{obj.Title}}</p>
+                                <p>GAME:{{obj.Game}}</h5>
+                                <p >ENTRY:{{obj.Entry}}</p>
+                                <p >LOCATION:{{obj.location}}</p>
+                                <p >PRIZES:{{obj.prizes}}</p>                              
+                                <p >DATE:{{obj.dot | date:'yyyy-MM-dd'}}</p>                               
+                                <p >CITY:{{obj.city}}</p> 
+                                <p >STATE:{{obj.State}}</p>
+                                <p >EMAIL:{{obj.email}}</p>
+                                <p >INFO:{{obj.area}}</p>
+                            </center>
+                    
+                       
+                        <br><br><br><br>
+                      </div>
+
+                    
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+    
+        </div>
+    </div>
+
+</div>
+</div>
+</div>
+
+            </body>
+        </html>

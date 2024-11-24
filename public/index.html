@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+     
+  
+        </style>
+  
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+  
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"></script>
+      
+      <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+
+
+
+    ></script>
+
+    <script>
+      
+ 
+
+            $(document).ready(function(){
+        
+        $("#signup").click(function(){
+          alert();
+            let email=$("#txtMail").val();
+            let pwd=$("#txtPwd").val();
+            let pwdr=$("#txtPwdR").val();
+            let utype=$("#utype").val();
+
+            let obj={
+              type:"get",
+              url:"/signup-process",
+              data:{
+                txtMail:email,
+                txtPwd:pwd,
+                txtPwdR:pwdr,
+                utype:utype
+              }
+            }
+
+$.ajax(obj).done(function(response){
+  alert(response);
+ 
+}).fail(function(err){
+  alert("server Error");
+})    });
+})
+
+
+
+
+$(document).ready(function(){
+      $("#login").click(function(){
+        alert()
+let Email=$("#email").val();
+let Pwd=$("#password").val();
+
+let obj={
+  type:"get",
+  url:"/login",
+  data:{
+email:Email,
+password:Pwd,
+  }
+}
+     
+
+$.ajax(obj).done(function(response){
+  alert(response);
+  resp=response;
+ if(resp=="Organizer")
+ {location.href="orgdash.html";
+
+ }
+ else if(resp=="Player")
+ {
+  location.href="dashboard.html";
+ }
+ else{
+  alert("invalid credentials");
+ }
+}).fail(function(err){
+  alert("server error");
+})
+});
+      })
+
+      $("#btnFetch").click(function(){
+            let email=$("#txtMail").val();
+           
+           let obj={
+                type:"get",
+                url:"/fetch-user",
+                data:{
+                    txtMail:email
+                }
+            }
+            $.ajax(obj).done(function(responseAry){
+
+alert(JSON.stringify(responseAry));
+if(responseAry.length==0)
+    {
+        alert("Invalid Id");
+        return;
+    }
+    $("#txtPwd").val(responseAry[0].pwd);
+                
+  })     
+                
+})
+</script>
+<style>
+   .navbar-custom {
+    background-color: #c0dadf;
+}
+   body{
+            font-family: "Times New Roman", Times, serif;
+            font-size: larger;
+          }
+
+/*.navbar{
+background-color: (0,0,53);
+
+}*/b{
+  border-radius: 50%;
+}
+      
+
+         * {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+ /* --purple: hsl(240, 80%, 89%);*/
+  background-color:#333740 ;
+  --pink: hsl(0, 59%, 94%);
+   ;
+  --light-gray-bg: hsl(0, 0%, 94%);
+  --white: hsl(0, 0%, 100%);
+  --dark: hsl(0, 0%, 7%);
+  /* --text-gray: hsl(0, 0%, 30%); */
+}
+
+body {
+  background: var(--light-bg);
+  font-family: "Times New Roman", Times, serif ;
+  color: var(--dark);
+}
+Garamond, serif
+h3 {
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+p {
+  font-size: 1em;
+  line-height: 1.7;
+  font-weight: 300;
+  color: var(--text-gray);
+}
+
+.description {
+  white-space: wrap;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+.navigation-button {
+  text-align: center;
+  position: relative;
+}
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+
+
+
+.wrap {
+  display: flex;
+ /* justify: space-between;*/
+  align-items: stretch;
+  width: 100%;
+  gap: 24px;
+  padding: 24px;
+  flex-wrap: wrap;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  position: relative;
+  padding: 24px;
+  background: #fff;
+  height:500px;
+}
+
+.box-top {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.box-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  object-position: 50% 20%;
+}
+
+.title-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box-tittle {
+  border-left: 3px solid var(#162A2C );
+  padding-left: 12px;
+}
+
+.user-follow-info {
+  color: hsl(0, 0%, 60%);
+}
+
+.button {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: auto;
+  padding: 10px;
+  color: #000;
+  background: transparent;
+  box-shadow: 0px 0px 0px 1px black inset;
+  transition:  0.4s ease;
+  height:10%
+}
+
+.button:hover {
+  background: var(--purple);
+}
+
+.fill-one {
+  background: var(--light-bg);
+}
+
+.fill-two {
+  background: var(--pink);
+}
+
+/* RESPONSIVE QUERIES */
+
+@media (min-width: 320px) {
+  .title-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+  }
+  .user-follow-info {
+    margin-top: 6px;
+  }
+}
+
+@media (min-width: 460px) {
+  .title-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+  }
+  .user-follow-info {
+    margin-top: 6px;
+  }
+}
+
+@media (min-width: 640px) {
+  .box {
+    flex-basis: calc(50% - 12px);
+  }
+  .title-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+  }
+  .user-follow-info {
+    margin-top: 6px;
+  }
+}
+
+@media (min-width: 840px) {
+  .title-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+  }
+  .user-follow-info {
+    margin-top: 6px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .box {
+    flex-basis: calc(33.3% - 16px);
+  }
+  .title-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+  }
+  .user-follow-info {
+    margin-top: 6px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .box {
+    flex-basis: calc(25% - 18px);
+  }
+}
+/*           footer css           */
+.footer {
+    background-color: #161616c5;
+    color: #fff;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.footer a {
+    color: #ff4757;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+</style>
+</head>
+<body>
+
+
+
+ 
+
+ <!-- Button trigger modal -->
+         
+
+
+ 
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark" >
+        
+          <div class="container-fluid">
+            <div class="b">
+              <img src="./pics/lg.jpg" border-radius="50%" height="50" width="50">
+            </div>
+            &nbsp; &nbsp; &nbsp; 
+            <a class="navbar-brand" href="#">BattleGround</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            &nbsp; &nbsp; &nbsp; 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                </li>
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#serve">Services</a>
+                </li>
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#team"> Team</a>
+                </li>
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#reach"> Reach us</a>
+                </li>
+                
+              </ul>
+              <form class="d-flex" role="search">
+                
+                
+                <button type="button" class="btn btn-dark"  data-bs-toggle="modal" data-bs-target="#Modal">
+                  Sign Up
+                </button>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-dark"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                          Login
+                        </button>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+
+
+     
+
+     <!-- ===================Carousel=============================== -->
+    
+     
+
+
+    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="./bgg.jpg" class="d-block w-100" alt="..."  width="1500" height="600">
+        </div>
+        <div class="carousel-item">
+          <img src="./pics/bskt.jpg" class="d-block w-100" alt="..."   width="1500" height="600">
+        </div>
+        <div class="carousel-item">
+          <img src="./pics/34.jpg" class="d-block w-100" alt="..."   width="1500" height="600"> 
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+
+
+
+      
+<!--Our services-->
+
+
+
+
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark"  id="serve">
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  <a class="navbar-brand" href="#">OUR SERVICES</a>
+ 
+  </nav>
+  <div class="container" >
+  <div class="wrap" >
+    <div class="box">
+      <div class="box-top">
+        <img class="box-image" src="https://i.pinimg.com/736x/04/82/6d/04826dce193bf7644357aed28652d7a3.jpg" alt="Publish" >
+        <div class="title-flex">
+          <h3 class="box-tittle">Publish Tournaments</h3>
+          <p class="user-follow-info"></p>
+        </div>
+        
+      </div>
+      <a href="./angular-jsg.html" class="button">Click</a>
+    </div>
+    <div class="box">
+      <div class="box-top">
+        <img class="box-image" src="https://i.pinimg.com/736x/a7/3e/7f/a73e7f23ff4df56296f2996a228cbccb.jpg">
+       
+        <div class="title-flex">
+          <h3 class="box-tittle">Upcoming Events</h3>
+          <p class="user-follow-info"></p>
+        </div>
+        <p class="description"></p>
+      </div>
+      <a href="#" class="button">Click</a>
+    </div>
+    <div class="box">
+      <div class="box-top">
+        <img class="box-image" src="https://i.pinimg.com/736x/37/c7/4c/37c74c424faae3e19aa10d5ba2cac702.jpg" alt="Girl Eating Pizza">
+        <div class="title-flex">
+          <h3 class="box-tittle">Win Prizes</h3>
+          <p class="user-follow-info"></p>
+        </div>
+        <p class="description"></p>
+      </div>
+      <a href="#" class="button">Click</a>
+    </div>
+    <div class="box">
+      <div class="box-top">
+        <img class="box-image" src="https://i.pinimg.com/736x/cf/20/ab/cf20ab5b6d591dfe8e88941070087381.jpg" alt="Girl Eating Pizza">
+        <div class="title-flex">
+          <h3 class="box-tittle">Certification</h3>
+          <p class="user-follow-info"></p>
+        </div>
+        <p class="description">
+        </p>
+        </div>
+      <a href="#" class="button">Click</a>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+<!-- Modal -->
+ 
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="ModalLabel"> SIGN UP</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       
+      </div>
+      <div class="modal-body">
+       
+        <form >
+          
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label" >Email address</label>
+            <input type="email" class="form-control" aria-describedby="emailHelp" id="txtMail" name="txtMail">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label" >Password</label>
+            <input type="password" class="form-control"  id="txtPwd" name="txtPwd">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label" >Repeat Password</label>
+            <input type="password" class="form-control"  id="txtPwdR" name="txtPwdR">
+          </div>
+          <div class="mb-3">
+          User Type : 
+          <select name="user"  id="utype" name="utype">
+            <option value="none">Select</option>
+            <option value="Player">Player</option>
+            
+            <option value="Organizer">Organizer</option>
+        </select>
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Remember me</label>
+          </div>
+          <button type="button" class="btn btn-primary" id="signup">Sign Up</button>
+
+        </form>
+
+
+       
+
+      <div class="modal-footer">
+       
+      </div>
+    </div>
+  </div>
+</div>
+</form> 
+&nbsp;&nbsp;
+            </form>
+          </div>
+        </div>
+       
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Login</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password">
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="remember">
+            <label class="form-check-label" for="exampleCheck1">Remember me</label>
+          </div>
+          <button type="button" class="btn btn-primary" id="login">Login</button>
+        </form>
+      </div>
+     
+    </div>
+  </div>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<!--our team-->
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark" id="team">
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  <a class="navbar-brand" href="#">OUR TEAM</a>
+  </nav>
+ <br>
+
+ <div class="container">
+  
+  <div class="row">
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+  <!-- <div class="card mb-3" style="max-width: 500px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+       
+        <img src="./pics/me.jpg"   width="150"  height="150" class="img-fluid rounded-start"alt="..." >
+      </div>
+      <div class="col-md-4">
+        <div class="card-body">
+          
+            <h3 class="card-title">Akshita Bansal</h3>
+          <br>
+          <p class="card-text">  -Computer Science Student</p><br>
+        
+        
+      </div>
+    </div>
+  </div> -->
+  
+  <!-- </div> -->
+
+  <div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="./pics/me.jpg" class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h3 class="card-title">Akshita Bansal</h3>
+          <br>
+          <p class="card-text">Computer Science Student</p>
+          <p class="card-text">Learner</p>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+
+<!-- <div class="card mb-3" style="max-width: 500px;">
+  <div class="row g-0">
+    <div class="col-md-3">
+     
+      <img src="./pics/sir.jpg"     width="200"  height="200" class="img-fluid rounded-start"alt="...">
+    </div>
+    <div class="col-md-4">
+      <div class="card-body">
+        
+          <h3 class="card-title">Rajesh Bansal</h3>
+        <br>
+        <p class="card-text">  -Author of 'Real Java'
+        </p>
+      
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="./pics/sir.jpg" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h3 class="card-title">Mr.Rajesh Bansal</h3>
+        <br>
+        <p class="card-text"> Author of 'Real Java'</p>
+        <p class="card-text"> 23+ years of experience</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+
+<br>
+  <!--Reach us-->
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark" id="reach">
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <a class="navbar-brand" href="#">REACH US</a>
+    </nav>
+
+
+   <center>
+   <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3437.169058661743!2d76.65762807557195!3d30.51625832468946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1schitkara%20university%20location!5e0!3m2!1sen!2sin!4v1732187541564!5m2!1sen!2sin" width="1520" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" ></iframe>
+  </center>
+
+
+  
+  <footer class="footer">
+    <p>&copy;  BattleGround . All rights reserved.</p>
+    
+</footer>
+</body>
+</html>
+
+ 
